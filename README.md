@@ -66,6 +66,11 @@ Meu README: <link-do-seu-repositório>
 Indicado por: <@nome-de-quem-indicou> (opcional)
 
 ---
+#DesafioMestreDaDocumentação
+Meu README: https://github.com/ralmtriggolabs/generate-readme
+Indicado por: @robsonamendonca
+
+---
 
 ## ⏳ PRAZO
 Você terá **48 horas** a partir do momento em que o desafio for anunciado no grupo.
@@ -130,7 +135,7 @@ Este desafio foi criado como forma de unir a comunidade, gerar prática real e d
 
 Pronto(a)?  
 Agora é só partir para a ação.  
-Boa sorte, e que vença o(a) mais organizado(a)! 😄💙
+Boa sorte, e que vença o(a) mais organizado(a)! 😄💙 
 
 ## 🏅 Como o badge é gerado automaticamente?
 
