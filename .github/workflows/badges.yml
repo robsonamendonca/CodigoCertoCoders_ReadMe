@@ -1,0 +1,212 @@
+name: 🎫 Sistema de Badges - Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      githubUser:
+        description: 'Usuário do GitHub para receber o badge (apenas letras, números, hífens e underscores)'
+        required: true
+        type: string
+      badgeType:
+        description: 'Tipo de Badge'
+        required: true
+        type: choice
+        options:
+          - mestre
+          - apoia
+      justification:
+        description: 'Justificativa para o badge'
+        required: true
+        type: string
+
+# Permissões mínimas necessárias
+permissions:
+  contents: write
+
+jobs:
+  validate-and-generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: 🔐 Validar entrada do usuário
+        id: validation
+        run: |
+          USER="${{ github.event.inputs.githubUser }}"
+          
+          # Validar formato do username do GitHub
+          if ! echo "$USER" | grep -Eq '^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$'; then
+            echo "❌ ERRO: Nome de usuário inválido: $USER"
+            echo "O username deve seguir o padrão do GitHub:"
+            echo "- Começar com letra ou número"
+            echo "- Conter apenas letras, números e hífens"
+            echo "- Não terminar com hífen"
+            echo "- Entre 1-39 caracteres"
+            exit 1
+          fi
+          
+          # Validar comprimento
+          if [ ${#USER} -gt 39 ]; then
+            echo "❌ ERRO: Nome de usuário muito longo (máximo 39 caracteres)"
+            exit 1
+          fi
+          
+          # Validar tipo de badge
+          if [[ "${{ github.event.inputs.badgeType }}" != "mestre" && "${{ github.event.inputs.badgeType }}" != "apoia" ]]; then
+            echo "❌ ERRO: Tipo de badge inválido"
+            exit 1
+          fi
+          
+          # Validar justificativa não vazia
+          if [ -z "${{ github.event.inputs.justification }}" ]; then
+            echo "❌ ERRO: Justificativa não pode estar vazia"
+            exit 1
+          fi
+          
+          echo "✅ Validação passada para usuário: $USER"
+          echo "user=$USER" >> $GITHUB_OUTPUT
+          echo "badge_type=${{ github.event.inputs.badgeType }}" >> $GITHUB_OUTPUT
+
+      - name: 📥 Checkout do repositório
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: 🛠️ Configurar ambiente Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📋 Verificar estrutura necessária
+        run: |
+          # Criar diretórios se não existirem
+          mkdir -p badges certificados templates
+          
+          # Verificar se process.js existe
+          if [ ! -f "process.js" ]; then
+            echo "❌ ERRO: Arquivo process.js não encontrado no repositório"
+            echo "📋 Crie o arquivo process.js na raiz do repositório"
+            exit 1
+          fi
+          
+          # Verificar se templates existem, criar padrão se não
+          if [ ! -f "templates/MestreDaDocumentacao.md" ]; then
+            echo "📝 Criando template padrão para Mestre da Documentação..."
+            cat > templates/MestreDaDocumentacao.md << 'EOF'
+          # 🏆 Mestre da Documentação
+
+          **Usuário:** {{githubUser}}
+          **Data:** {{date}}
+          **Repositório:** {{repository}}
+
+          Parabéns pelas contribuições excepcionais à documentação!
+          EOF
+                    fi
+                    
+                    if [ ! -f "templates/DevApoiaDev.md" ]; then
+                      echo "📝 Criando template padrão para Dev que Apoia Dev..."
+                      cat > templates/DevApoiaDev.md << 'EOF'
+          # 🤝 Dev que Apoia Dev
+
+          **Usuário:** {{githubUser}}
+          **Data:** {{date}}
+          **Repositório:** {{repository}}
+
+          Agradecemos pelo suporte à comunidade de desenvolvedores!
+          EOF
+                    fi
+                    
+                    echo "✅ Estrutura de arquivos verificada"
+
+      - name: 🚀 Executar geração de badges
+        id: generation
+        env:
+          PR_USER: ${{ steps.validation.outputs.user }}
+          BADGE_TYPE: ${{ steps.validation.outputs.badge_type }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          echo "🎯 Iniciando geração de badge..."
+          echo "Usuário: $PR_USER"
+          echo "Tipo: $BADGE_TYPE"
+          echo "Repositório: $REPO_URL"
+          echo "Justificativa: ${{ github.event.inputs.justification }}"
+          
+          # Executar o script e capturar resultado
+          if node process.js; then
+            echo "✅ Geração concluída com sucesso"
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Falha na geração do badge"
+            exit 1
+          fi
+
+      - name: 📊 Verificar mudanças geradas
+        id: changes
+        run: |
+          # Verificar se há mudanças para commitar
+          echo "📁 Arquivos modificados:"
+          git status --porcelain
+          
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "⚠️ Nenhuma alteração detectada para commitar"
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "📦 Alterações detectadas:"
+            git status --porcelain
+          fi
+
+      - name: 💾 Commitar mudanças
+        if: steps.changes.outputs.changes == 'true'
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          author_name: 'github-actions[bot]'
+          author_email: '41898282+github-actions[bot]@users.noreply.github.com'
+          message: '🎉 Badge gerado para ${{ steps.validation.outputs.user }} - ${{ steps.validation.outputs.badge_type }}'
+          branch: ${{ github.ref_name }}
+
+      - name: 📝 Registrar execução
+        if: always()
+        run: |
+          echo "=== RELATÓRIO DE EXECUÇÃO ==="
+          echo "Usuário: ${{ steps.validation.outputs.user }}"
+          echo "Badge: ${{ steps.validation.outputs.badge_type }}"
+          echo "Justificativa: ${{ github.event.inputs.justification }}"
+          echo "Executado por: ${{ github.actor }}"
+          echo "Timestamp: $(date -Iseconds)"
+          echo "Status: ${{ steps.generation.outputs.success || 'unknown' }}"
+          echo "Mudanças: ${{ steps.changes.outputs.changes || 'none' }}"
+          
+          # Criar arquivo de log para auditoria
+          mkdir -p .github/logs
+          echo "Usuario: ${{ steps.validation.outputs.user }}" >> .github/logs/badges_audit.log
+          echo "Badge: ${{ steps.validation.outputs.badge_type }}" >> .github/logs/badges_audit.log
+          echo "Executor: ${{ github.actor }}" >> .github/logs/badges_audit.log
+          echo "Data: $(date -Iseconds)" >> .github/logs/badges_audit.log
+          echo "Justificativa: ${{ github.event.inputs.justification }}" >> .github/logs/badges_audit.log
+          echo "---" >> .github/logs/badges_audit.log
+
+  post-generation:
+    runs-on: ubuntu-latest
+    needs: validate-and-generate
+    if: always()
+    
+    steps:
+      - name: ✅ Notificar sucesso
+        if: needs.validate-and-generate.result == 'success'
+        run: |
+          echo "🎊 Processo concluído com sucesso!"
+          echo "Badge gerado para: ${{ github.event.inputs.githubUser }}"
+          echo "Tipo: ${{ github.event.inputs.badgeType }}"
+          echo "Justificativa: ${{ github.event.inputs.justification }}"
+
+      - name: ❌ Notificar falha
+        if: needs.validate-and-generate.result == 'failure'
+        run: |
+          echo "💥 Falha no processo de geração de badge"
+          echo "Verifique os logs acima para detalhes"
+          exit 1
