@@ -200,3 +200,19 @@ E seu certificado em:
 
 ## Lista de Participantes:
 [🏅 Certificados da Comunidade – Código Certo Coders](https://robsonamendonca.github.io/CodigoCertoCoders_ReadMe/)
+
+---
+
+## ⭐ Apoie o Projeto
+
+Se este projeto te ajudou, considere deixar uma estrela. Isso fortalece o desenvolvimento e mostra que o conteúdo está sendo útil para outras pessoas.
+
+[![Stars](https://img.shields.io/github/stars/robsonamendonca/CodigoCertoCoders_ReadMe?style=for-the-badge)](https://github.com/robsonamendonca/CodigoCertoCoders_ReadMe/stargazers)
+
+---
+
+## 👀 Contador de Visitantes
+
+![Visitors](https://komarev.com/ghpvc/?username=SEU-robsonamendonca&label=Visitantes&color=0e75b6&style=for-the-badge)
+
+---
