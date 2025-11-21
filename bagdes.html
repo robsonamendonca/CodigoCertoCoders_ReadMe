@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Código Certo Coders – Certificados</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .card {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(255,0,0,0.2);
+    }
+    .badge-img {
+      width: 90%;
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+    a {
+      color: #00aaff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .type {
+      background: crimson;
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🏅 Certificados da Comunidade – Código Certo Coders</h1>
+
+<div id="cards" class="container"></div>
+
+<script>
+async function carregarCertificados() {
+  const res = await fetch("../badges.json");
+  const json = await res.json();
+
+  const container = document.getElementById("cards");
+
+  function criarCard(item, tipo) {
+    const nomeArquivo =
+      tipo === "mestre"
+        ? `${item.githubUser}-MestreDaDocumentacao.md`
+        : `${item.githubUser}-DevApoiaDev.md`;
+
+    const badgeArquivo =
+      tipo === "mestre"
+        ? `${item.githubUser}-mestre.svg`
+        : `${item.githubUser}-apoia.svg`;
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="type">${tipo === "mestre" ? "Mestre da Documentação" : "Dev que Apoia Dev"}</div>
+
+      <h2>${item.githubUser}</h2>
+      <p><strong>Data:</strong> ${item.date}</p>
+
+      <img class="badge-img" src="../badges/${badgeArquivo}" />
+
+      <p><a href="../certificados/${nomeArquivo}" target="_blank">📄 Ver Certificado</a></p>
+    `;
+
+    container.appendChild(card);
+  }
+
+  json.mestreDaDocumentacao.forEach(x => criarCard(x, "mestre"));
+  json.devApoiaDev.forEach(x => criarCard(x, "apoia"));
+}
+
+carregarCertificados();
+</script>
+
+</body>
+</html>
