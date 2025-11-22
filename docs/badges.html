@@ -59,7 +59,7 @@
 
 <script>
 async function carregarCertificados() {
-  const res = await fetch("../badges.json");
+  const res = await fetch("https://robsonamendonca.github.io/CodigoCertoCoders_ReadMe/badges.json");
   const json = await res.json();
 
   const container = document.getElementById("cards");
@@ -72,8 +72,8 @@ async function carregarCertificados() {
 
     const badgeArquivo =
       tipo === "mestre"
-        ? `${item.githubUser}-mestre.svg`
-        : `${item.githubUser}-apoia.svg`;
+        ? `${item.githubUser}-MestreDaDocumentacao.png`
+        : `${item.githubUser}-DevQApoiaDev.png`;
 
     const card = document.createElement("div");
     card.className = "card";
