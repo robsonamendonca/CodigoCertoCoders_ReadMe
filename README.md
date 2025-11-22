@@ -199,7 +199,7 @@ E seu certificado em:
 ```
 
 ## Lista de Participantes:
-[🏅 Certificados da Comunidade – Código Certo Coders](https://robsonamendonca.github.io/CodigoCertoCoders_ReadMe/)
+[🏅 Certificados da Comunidade – Código Certo Coders](https://robsonamendonca.github.io/CodigoCertoCoders_ReadMe/badges.html)
 
 ---
 
