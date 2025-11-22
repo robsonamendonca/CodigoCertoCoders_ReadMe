@@ -60,6 +60,8 @@
 <script>
 async function carregarCertificados() {
   const baseurl = "https://robsonamendonca.github.io/CodigoCertoCoders_ReadMe/";
+  const baseurlFile= "https://raw.githubusercontent.com/robsonamendonca/CodigoCertoCoders_ReadMe/refs/heads/main/docs/";
+
   const res = await fetch(baseurl+ "/badges.json");
   const json = await res.json();
 
@@ -85,9 +87,9 @@ async function carregarCertificados() {
       <h2>${item.githubUser}</h2>
       <p><strong>Data:</strong> ${item.date}</p>
 
-      <img class="badge-img" src="${baseurl}badges/${badgeArquivo}" />
+      <img class="badge-img" src="${baseurlFile}badges/${badgeArquivo}" />
 
-      <p><a href="${baseurl}certificados/${nomeArquivo}" target="_blank">📄 Ver Certificado</a></p>
+      <p><a href="${baseurlFile}certificados/${nomeArquivo}" target="_blank">📄 Ver Certificado</a></p>
     `;
 
     container.appendChild(card);
