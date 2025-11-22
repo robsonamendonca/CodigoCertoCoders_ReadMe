@@ -5,7 +5,14 @@
       "name": "Robson Mendonça",
       "repository": "https://github.com/robsonamendonca/CodigoCertoCoders_ReadMe",
       "date": "2024-06-10"
+    },
+    {
+      "githubUser": "ralmtriggolabs",
+      "name": "ralmtriggolabs",
+      "repository": "https://github.com/ralmtriggolabs/generate-readme",
+      "date": "2024-06-10"
     }
+
   ],
   "devApoiaDev": [
     {
@@ -15,14 +22,5 @@
       "indicatedRepository": "https://github.com/ralmtriggolabs/generate-readme",
       "date": "2025-11-21"
     }
-  ],
-  "mestreDaDocumentacao": [
-    {
-      "githubUser": "ralmtriggolabs",
-      "name": "ralmtriggolabs",
-      "repository": "https://github.com/ralmtriggolabs/generate-readme",
-      "date": "2024-06-10"
-    }
-  ],
-  "devApoiaDev": []
+  ]
 }
