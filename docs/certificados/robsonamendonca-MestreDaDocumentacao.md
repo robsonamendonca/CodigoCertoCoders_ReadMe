@@ -1,10 +1,10 @@
 # 🏅 Badge Mestre da Documentação
 
 ## 📛 Identificação do Membro
-- **Usuário GitHub:** {{githubUser}}
-- **Nome:** {{name}}
-- **Projeto Documentado:** {{repository}}
-- **Entrega:** {{date}}
+- **Usuário GitHub:** robsonamendonca
+- **Nome:** Robson Mendonça
+- **Projeto Documentado:** https://github.com/robsonamendonca/CodigoCertoCoders_ReadMe
+- **Entrega:** 2025-11-21
 
 ---
 
@@ -17,12 +17,12 @@
 ---
 
 ## 🖼️ Badge Recebido
-![Badge Mestre da Documentação](../badges/{{githubUser}}-mestre.svg)
+![Badge Mestre da Documentação](../badges/robsonamendonca-mestre.svg)
 
 ---
 
 ## 🎖️ Reconhecimento
-O membro **{{githubUser}}** está oficialmente certificado como **Mestre da Documentação** pela comunidade **Código Certo Coders**.
+O membro **robsonamendonca** está oficialmente certificado como **Mestre da Documentação** pela comunidade **Código Certo Coders**.
 
 ---
 ✨ _Código Certo Coders – Domine a arte de documentar._

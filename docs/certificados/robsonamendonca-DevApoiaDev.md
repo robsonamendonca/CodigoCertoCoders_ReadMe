@@ -1,11 +1,11 @@
 # 🤝 Badge Dev que Apoia Dev
 
 ## 📛 Identificação do Membro
-- **Usuário GitHub:** {{githubUser}}
-- **Nome:** {{name}}
-- **Pessoa Indicada:** {{indicatedUser}}
-- **Projeto da Pessoa Indicada:** {{indicatedRepository}}
-- **Entrega:** {{date}}
+- **Usuário GitHub:** robsonamendonca
+- **Nome:** Robson Mendonça
+- **Pessoa Indicada:** ralmtrigglabs
+- **Projeto da Pessoa Indicada:** https://github.com/ralmtriggolabs/generate-readme
+- **Entrega:** 2025-11-21
 
 ---
 
@@ -18,12 +18,12 @@
 ---
 
 ## 🖼️ Badge Recebido
-![Badge Dev que Apoia Dev](../badges/{{githubUser}}-apoia.svg)
+![Badge Dev que Apoia Dev](../badges/robsonamendonca-DevQApoiaDev.png)
 
 ---
 
 ## 🎖️ Reconhecimento
-O membro **{{githubUser}}** está oficialmente certificado como **Dev que Apoia Dev** pela comunidade **Código Certo Coders**.
+O membro **robsonamendonca** está oficialmente certificado como **Dev que Apoia Dev** pela comunidade **Código Certo Coders**.
 
 ---
 ✨ _Código Certo Coders – Crescemos ajudando uns aos outros._
