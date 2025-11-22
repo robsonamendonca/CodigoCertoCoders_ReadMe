@@ -13,10 +13,10 @@
       "name": "Robson Mendonça",
       "indicatedUser": "ralmtriggolabs",
       "indicatedRepository": "https://github.com/ralmtriggolabs/generate-readme",
-      "date": "2024-06-15"
+      "date": "2025-11-21"
     }
   ],
-  "mestreDaDocumentacaoAntigo": [
+  "mestreDaDocumentacao": [
     {
       "githubUser": "ralmtriggolabs",
       "name": "ralmtriggolabs",
@@ -24,5 +24,5 @@
       "date": "2024-06-10"
     }
   ],
-  "devApoiaDevAntigo": []
+  "devApoiaDev": []
 }
